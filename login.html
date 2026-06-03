@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 20px; background-color: #ffffff;">
+            <h3 class="text-center mb-4" style="color: var(--primary-dark);">Chào mừng bạn</h3>
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label text-secondary">Tên tài khoản</label>
+                    <input type="text" name="username" class="form-control" required style="border-radius: 10px; border: 1px solid #ddd;">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-secondary">Mật khẩu</label>
+                    <input type="password" name="password" class="form-control" required style="border-radius: 10px; border: 1px solid #ddd;">
+                </div>
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" name="action" value="login" class="btn btn-pastel-primary py-2">Đăng nhập</button>
+                    <button type="submit" name="action" value="register" class="btn btn-outline-secondary py-2" style="border-radius: 10px;">Đăng ký tài khoản</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
