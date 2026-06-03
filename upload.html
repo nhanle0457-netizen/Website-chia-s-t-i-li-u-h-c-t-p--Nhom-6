@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card border-0 shadow-sm p-5" style="border-radius: 25px; background-color: #ffffff;">
+            <h3 class="mb-4" style="color: var(--primary-dark);">
+                {{ 'Chỉnh sửa tài liệu' if doc else 'Tải tài liệu lên thư viện' }}
+            </h3>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Tiêu đề tài liệu</label>
+                    <input type="text" name="title" class="form-control" value="{{ doc.title if doc else '' }}" placeholder="Nhập tiêu đề..." required style="border-radius: 10px;">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Mô tả chi tiết</label>
+                    <textarea name="description" class="form-control" rows="4" placeholder="Nhập mô tả về tài liệu..." style="border-radius: 10px;">{{ doc.description if doc else '' }}</textarea>
+                </div>
+                {% if not doc %}
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Chọn tệp tin</label>
+                    <input type="file" name="file" class="form-control" required style="border-radius: 10px;">
+                    <div class="form-text text-muted small mt-1">Định dạng hỗ trợ: PDF, DOCX, TXT...</div>
+                </div>
+                {% endif %}
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-pastel-primary btn-lg mt-2">
+                        {{ 'Cập nhật tài liệu' if doc else 'Đăng tải tài liệu' }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
