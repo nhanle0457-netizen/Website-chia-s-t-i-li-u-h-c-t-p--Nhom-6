@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">📚 Thư viện tài liệu</h2>
+
+<form action="/" method="GET" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Tìm kiếm tài liệu..." value="{{ search }}">
+        <button class="btn btn-pastel-primary" type="submit">Tìm kiếm</button>
+    </div>
+</form>
+
+<div class="row">
+    {% for doc in docs %}
+    {# Hiển thị bài viết nếu là Admin HOẶC bài đã duyệt HOẶC bài của chính người đó #}
+    {% if session.get('role') == 'admin' or doc.status == 'approved' or doc.username == session.get('username') %}
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 border-0 shadow-sm p-3" style="border-radius: 15px;">
+            <div class="card-body">
+                <h5 class="card-title fw-bold text-primary">{{ doc.title }}</h5>
+                <p class="text-muted small">{{ doc.description }}</p>
+                
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="badge {{ 'bg-success' if doc.status == 'approved' else 'bg-warning' }} bg-opacity-25 text-dark">
+                        {{ 'Đã duyệt' if doc.status == 'approved' else 'Chờ duyệt' }}
+                    </span>
+                    <small>Người đăng: <b>{{ doc.username }}</b></small>
+                </div>
+            </div>
+            
+            <div class="card-footer bg-white border-0 pt-0">
+                <a href="{{ url_for('download', filename=doc.filename) }}" class="btn btn-outline-primary btn-sm">Tải xuống</a>
+                
+                {# Admin thấy nút Duyệt khi bài ở trạng thái Chờ duyệt #}
+                {% if session.get('role') == 'admin' and doc.status == 'pending' %}
+                    <form action="/approve/{{ doc.id }}" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-pastel-primary btn-sm">Duyệt</button>
+                    </form>
+                {% endif %}
+
+                {# Chủ bài HOẶC Admin đều thấy nút Sửa và Xóa #}
+                {% if doc.username == session.get('username') or session.get('role') == 'admin' %}
+                    <a href="{{ url_for('edit', id=doc.id) }}" class="btn btn-sm text-secondary">Sửa</a>
+                    <form action="{{ url_for('delete', id=doc.id) }}" method="POST" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
+                        <button type="submit" class="btn btn-pastel-danger btn-sm">Xóa</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
