@@ -16,5 +16,5 @@ class Doc(db.Model):
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
     filename = db.Column(db.String(200))                  # Lưu tên file an toàn sau khi upload
-    username = db.Column(db.String(80))                   # Người sở hữu tài liệu
+    username = db.Column(db.String(80))                   # Người sở hữu tài liệu user ỏ admin
     status = db.Column(db.String(20), default='pending')  # Trạng thái: pending/approved
