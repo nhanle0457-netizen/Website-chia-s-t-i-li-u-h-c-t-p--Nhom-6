@@ -6,7 +6,7 @@ from models import db, User, Doc
 
 app = Flask(__name__)
 
-app.secret_key = 'mat_khau_session_sieu_bao_mat_cua_ban'
+app.secret_key = 'mat_khau_session'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
